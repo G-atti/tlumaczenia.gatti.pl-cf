@@ -1,0 +1,22 @@
+{
+	"PipelineWebpageHomePolicyCB": {
+		"Type": "AWS::IAM::Policy",
+		"Properties": {
+			"PolicyName": "codebuild",
+			"Roles": [ { "Ref": "PipelineWebpageHomeRole" } ],
+			"PolicyDocument": {
+				"Version": "2012-10-17",
+				"Statement": [
+					{
+						"Effect": "Allow",
+						"Action": [
+							"codebuild:BatchGetBuilds",
+							"codebuild:StartBuild"
+						],
+						"Resource": { "Fn::Sub": "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/${CodeBuildWebpageHome}" }
+					}
+				]
+			}
+		}
+	}
+}

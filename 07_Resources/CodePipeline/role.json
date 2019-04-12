@@ -1,0 +1,20 @@
+{
+	"PipelineWebpageHomeRole": {
+		"Type": "AWS::IAM::Role",
+		"Properties": {
+			"RoleName": "tlumaczenia_gatti_pl_front_end_codepipeline_webpage",
+			"AssumeRolePolicyDocument": {
+				"Version": "2012-10-17",
+				"Statement": [
+					{
+						"Effect": "Allow",
+						"Principal": {
+							"Service": "codepipeline.amazonaws.com"
+						},
+						"Action": "sts:AssumeRole"
+					}
+				]
+			}
+		}
+	}
+}

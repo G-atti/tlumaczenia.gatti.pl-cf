@@ -1,0 +1,47 @@
+{
+	"CloudFrontHome": {
+		"Type": "AWS::CloudFront::Distribution",
+		"Properties": {
+			"DistributionConfig": {
+				"Comment": "tlumaczenia.gatti.pl",
+				"DefaultCacheBehavior": {
+					"ForwardedValues": {
+						"Cookies": {
+							"Forward": "none"
+						},
+						"QueryString": false
+					},
+					"MinTTL": 0,
+					"TargetOriginId": { "Fn::GetAtt": ["S3WebpageHome", "DomainName"] },
+					"ViewerProtocolPolicy": "redirect-to-https",
+					"AllowedMethods": ["GET", "HEAD"],
+					"CachedMethods": ["GET", "HEAD"],
+					"Compress": true,
+					"DefaultTTL": 86400,
+					"MaxTTL": 31536000,
+					"SmoothStreaming": false
+				},
+				"Enabled": true,
+				"Origins": [{
+					"DomainName": { "Fn::GetAtt": ["S3WebpageHome", "DomainName"] },
+					"Id": { "Fn::GetAtt": ["S3WebpageHome", "DomainName"] },
+					"CustomOriginConfig": {
+						"HTTPPort": 80,
+						"HTTPSPort": 443,
+						"OriginProtocolPolicy": "http-only",
+						"OriginSSLProtocols": ["TLSv1.1"]
+					}
+				}],
+				"DefaultRootObject": "home",
+				"HttpVersion": "http2",
+				"IPV6Enabled": true,
+				"PriceClass": "PriceClass_100",
+				"Restrictions": {
+					"GeoRestriction": {
+						"RestrictionType": "none"
+					}
+				}
+			}
+		}
+	}
+}

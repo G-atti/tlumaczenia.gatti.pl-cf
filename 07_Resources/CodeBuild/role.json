@@ -1,0 +1,20 @@
+{
+	"CodeBuildWebpageHomeRole": {
+		"Type": "AWS::IAM::Role",
+		"Properties": {
+			"RoleName": "tlumaczenia_gatti_pl_front_end_codebuild_webpage",
+			"AssumeRolePolicyDocument": {
+				"Version": "2012-10-17",
+				"Statement": [
+					{
+						"Effect": "Allow",
+						"Principal": {
+							"Service": "codebuild.amazonaws.com"
+						},
+						"Action": "sts:AssumeRole"
+					}
+				]
+			}
+		}
+	}
+}

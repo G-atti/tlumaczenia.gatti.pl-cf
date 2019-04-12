@@ -1,0 +1,26 @@
+{
+	"CodeBuildWebpageHomePolicyCWL": {
+		"Type": "AWS::IAM::Policy",
+		"Properties": {
+			"Roles": [ { "Ref": "CodeBuildWebpageHomeRole" } ],
+			"PolicyName": "cloud_watch_log_access",
+			"PolicyDocument": {
+				"Version": "2012-10-17",
+				"Statement": [
+					{
+						"Effect": "Allow",
+						"Action": [
+							"logs:CreateLogGroup",
+							"logs:CreateLogStream",
+							"logs:PutLogEvents"
+						],
+						"Resource": [
+							{ "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/tlumaczenia_gatti_pl_front_end" },
+							{ "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/tlumaczenia_gatti_pl_front_end:*" }
+						]
+					}
+				]
+			}
+		}
+	}
+}

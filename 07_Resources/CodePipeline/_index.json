@@ -1,0 +1,65 @@
+{
+	"PipelineWebpageHome": {
+		"Type": "AWS::CodePipeline::Pipeline",
+		"Properties": {
+			"Name": "tlumaczenia_gatti_pl_front_end",
+			"ArtifactStore": {
+				"Location": { "Ref": "CodePipelineArtifacts" },
+				"Type": "S3"
+			},
+			"RoleArn": { "Fn::GetAtt": ["PipelineWebpageHomeRole", "Arn" ] },
+			"Stages": [
+				{
+					"Name": "Get",
+					"Actions": [
+						{
+							"Name": "Material",
+							"RunOrder": 1,
+							"ActionTypeId": {
+								"Category": "Source",
+								"Owner": "ThirdParty",
+								"Provider": "GitHub",
+								"Version": "1"
+							},
+							"Configuration": {
+								"Owner": "davidgatti",
+								"Repo": "tlumaczenia.gatti.pl",
+								"Branch": { "Ref": "Stage" },
+								"PollForSourceChanges": true,
+								"OAuthToken": { "Ref": "GitHubToken" }
+							},
+							"OutputArtifacts": [
+								{
+									"Name": "material"
+								}
+							]
+						}
+					]
+				},
+				{
+					"Name": "Cast",
+					"Actions": [
+						{
+							"Name": "Mold",
+							"RunOrder": 1,
+							"InputArtifacts": [
+								{
+									"Name": "material"
+								}
+							],
+							"Configuration": {
+								"ProjectName": { "Ref": "CodeBuildWebpageHome" }
+							},
+							"ActionTypeId": {
+								"Category": "Build",
+								"Owner": "AWS",
+								"Provider": "CodeBuild",
+								"Version": "1"
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}
